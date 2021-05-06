@@ -44,7 +44,8 @@ LOCAL_APPS = [
     'kartify.accounts',
     'kartify.core',
     'kartify.category',
-    'kartify.store'
+    'kartify.store',
+    'kartify.cart'
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -123,19 +124,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
-
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'kartify/static'
-STATICFILES_DIRS = [
-    'kartify/static_local'
-]
-
-# Media Files
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'kartify/media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
