@@ -27,4 +27,7 @@ class CartItem(models.Model):
         verbose_name_plural = _('Cart Items')
 
     def __str__(self):
-        return self.product
+        return self.product.name
+
+    def sub_total(self):
+        return round(self.product.price * self.quantity, 2)
