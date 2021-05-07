@@ -1,9 +1,9 @@
 from django.urls import path
 
-from kartify.core.views import home
+from kartify.core.views import HomeView
 
 app_name = 'core'
 
 urlpatterns = [
-    path('', home, name='home')
+    path('', HomeView.as_view(), name='home')
 ]
