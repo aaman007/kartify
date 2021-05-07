@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 
@@ -9,6 +10,7 @@ from kartify.store.models import Product
 
 class StoreView(ListView):
     model = Product
+    paginate_by = 6
     context_object_name = 'products'
     template_name = 'store/store.html'
 
@@ -20,15 +22,19 @@ class StoreView(ListView):
 
     def get_queryset(self):
         category = self.get_category()
+        search_term = self.request.GET.get('search')
+        q_exp = Q(is_available=True)
         if category:
-            return Product.objects.filter(is_available=True, category=category)
-        return Product.objects.filter(is_available=True)
+            q_exp &= Q(category=category)
+        if search_term:
+            q_exp &= Q(name__icontains=search_term) | Q(description__icontains=search_term)
+        return Product.objects.filter(q_exp).order_by('-id')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
             'category': self.get_category(),
-            'product_count': context.get('products').count()
+            'product_count': self.get_queryset().count()
         })
         return context
 
